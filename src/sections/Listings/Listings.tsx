@@ -1,10 +1,14 @@
 import { gql } from "apollo-boost";
 import { useQuery, useMutation } from "react-apollo";
+import { Alert, List, Avatar, Button, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Listings as ListingsData } from "./__generated__/Listings";
 import {
   DeleteListing as DeleteListingData,
   DeleteListingVariables,
 } from "./__generated__/DeleteListing";
+import "./styles/Listings.css";
+import { ListingsSkeleton } from "./components";
 
 const LISTINGS = gql`
   query Listings {
@@ -44,47 +48,70 @@ export const Listings = ({ title }: Props) => {
 
   const handleDeleteListing = async (id: string) => {
     await deleteListing({ variables: { id } });
-    refetch();
+    if (data && data.listings !== null) {
+      refetch();
+    }
   };
 
   const listings = data ? data.listings : null;
 
   const listingsList = listings ? (
-    <ul>
-      {listings.map((listing) => {
-        return (
-          <li key={listing.id}>
-            {listing.title}
-            <button onClick={() => handleDeleteListing(listing.id)}>
+    <List
+      itemLayout="horizontal"
+      dataSource={listings}
+      renderItem={(listing) => (
+        <List.Item
+          actions={[
+            <Button
+              type="primary"
+              onClick={() => handleDeleteListing(listing.id)}
+            >
               Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+            </Button>,
+          ]}
+        >
+          <List.Item.Meta
+            title={listing.title}
+            description={listing.address}
+            avatar={<Avatar src={listing.image} shape="square" size={48} />}
+          />
+        </List.Item>
+      )}
+    />
   ) : null;
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return (
+      <div className="listings">
+        <ListingsSkeleton title={title} />
+      </div>
+    );
   }
 
   if (error) {
-    return <h2>An unexpected error occurred.</h2>;
+    return (
+      <div className="listings">
+        <ListingsSkeleton title={title} error />
+      </div>
+    );
   }
 
-  const deleteListingLoadingMessage = deleteListingLoading ? (
-    <h4>Deletion in progress...</h4>
-  ) : null;
-  const deleteListingErrorMessage = deleteListingError ? (
-    <h4>An unexpected error occurred while attempting to delete a listing.</h4>
+  const deleteListingErrorAlert = deleteListingError ? (
+    <Alert
+      type="error"
+      message="An unexpected error occurred while attempting to delete a listing."
+      className="listings-alert"
+    />
   ) : null;
 
+  const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   return (
-    <div>
-      <h2>{title}</h2>
-      {listingsList}
-      {deleteListingLoadingMessage}
-      {deleteListingErrorMessage}
+    <div className="listings">
+      <Spin indicator={spinIcon} spinning={deleteListingLoading}>
+        {deleteListingErrorAlert}
+        <h2>{title}</h2>
+        {listingsList}
+      </Spin>
     </div>
   );
 };
