@@ -48,8 +48,10 @@ export const MenuItems = ({ viewer, setViewer }: Props) => {
           </Link>
         </Item>
         <Item key="logout">
-          <LogoutOutlined />
-          Log Out
+          <div onClick={handleLogOut}>
+            <LogoutOutlined />
+            Log Out
+          </div>
         </Item>
       </SubMenu>
     ) : (
