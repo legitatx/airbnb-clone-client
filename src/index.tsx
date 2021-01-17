@@ -50,7 +50,7 @@ const App = () => {
     onCompleted: (data) => {
       if (data && data.logIn) {
         setViewer(data.logIn);
-        
+
         if (data.logIn.token) {
           sessionStorage.setItem("token", data.logIn.token);
         } else {
@@ -98,7 +98,11 @@ const App = () => {
             path="/login"
             render={(props) => <Login {...props} setViewer={setViewer} />}
           />
-          <Route exact path="/user/:id" component={User} />
+          <Route
+            exact
+            path="/user/:id"
+            render={(props) => <User {...props} viewer={viewer} />}
+          />
           <Route exact component={NotFound} />
         </Switch>
       </Layout>
