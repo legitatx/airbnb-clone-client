@@ -12,7 +12,7 @@ import { ListingFilter } from "../../lib/graphql/globalTypes";
 import { HomeHero, HomeListings } from "./components";
 
 import mapBackground from "./assets/map-background.jpg";
-import sanFranciscoImage from "./assetds/san-fransisco.jpg";
+import sanFranciscoImage from "./assets/san-fransisco.jpg";
 import cancunImage from "./assets/cancun.jpg";
 import { displayErrorMessage } from "../../lib/utils";
 import { HomeListingsSkeleton } from "./components/HomeListingsSkeleton";
