@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider, useMutation } from "react-apollo";
 import { render } from "react-dom";
@@ -82,38 +82,38 @@ const App = () => {
   ) : null;
 
   return (
-    <Router>
-      <Layout id="app">
-        {logInErrorBannerElement}
-        <Affix offsetTop={0} className="app__affix-header">
-          <AppHeader viewer={viewer} setViewer={setViewer} />
-        </Affix>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/host" component={Host} />
-          <Route exact path="/listing/:id" component={Listing} />
-          <Route exact path="/listings/:location?" component={Listings} />
-          <Route
-            exact
-            path="/login"
-            render={(props) => <Login {...props} setViewer={setViewer} />}
-          />
-          <Route
-            exact
-            path="/user/:id"
-            render={(props) => <User {...props} viewer={viewer} />}
-          />
-          <Route exact component={NotFound} />
-        </Switch>
-      </Layout>
-    </Router>
+    <Layout id="app">
+      {logInErrorBannerElement}
+      <Affix offsetTop={0} className="app__affix-header">
+        <AppHeader viewer={viewer} setViewer={setViewer} />
+      </Affix>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/host" component={Host} />
+        <Route exact path="/listing/:id" component={Listing} />
+        <Route exact path="/listings/:location?" component={Listings} />
+        <Route
+          exact
+          path="/login"
+          render={(props) => <Login {...props} setViewer={setViewer} />}
+        />
+        <Route
+          exact
+          path="/user/:id"
+          render={(props) => <User {...props} viewer={viewer} />}
+        />
+        <Route exact component={NotFound} />
+      </Switch>
+    </Layout>
   );
 };
 
 render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
