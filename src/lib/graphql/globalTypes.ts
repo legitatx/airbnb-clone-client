@@ -17,6 +17,10 @@ export enum ListingType {
   HOUSE = "HOUSE",
 }
 
+export interface ConnectStripeInput {
+  code: string;
+}
+
 export interface LogInInput {
   code: string;
 }
