@@ -22,6 +22,7 @@ import {
 import { Viewer } from "./lib/types";
 import { AppHeaderSkeleton, ErrorBanner } from "./lib/components";
 import { Affix, Layout, Spin } from "antd";
+import { StripeProvider, Elements } from "react-stripe-elements";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.css";
 
@@ -99,7 +100,11 @@ const App = () => {
         <Route
           exact
           path="/listing/:id"
-          render={(props) => <Listing {...props} viewer={viewer} />}
+          render={(props) => (
+            <Elements>
+              <Listing {...props} viewer={viewer} />
+            </Elements>
+          )}
         />
         <Route exact path="/listings/:location?" component={Listings} />
         <Route
@@ -128,11 +133,15 @@ const App = () => {
 };
 
 render(
-  <BrowserRouter>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </BrowserRouter>,
+  <StripeProvider
+    apiKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string}
+  >
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </BrowserRouter>
+  </StripeProvider>,
   document.getElementById("root")
 );
 
