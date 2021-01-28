@@ -48,6 +48,7 @@ const initialViewer: Viewer = {
 
 const App = () => {
   const [viewer, setViewer] = useState<Viewer>(initialViewer);
+  console.log(viewer);
   const [logIn, { error }] = useMutation<LogInData, LogInVariables>(LOG_IN, {
     onCompleted: (data) => {
       if (data && data.logIn) {
@@ -96,7 +97,6 @@ const App = () => {
           path="/host"
           render={(props) => <Host {...props} viewer={viewer} />}
         />
-        <Route exact path="/listing/:id" component={Listing} />
         <Route
           exact
           path="/listing/:id"
@@ -133,15 +133,13 @@ const App = () => {
 };
 
 render(
-  <StripeProvider
-    apiKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string}
-  >
-    <BrowserRouter>
-      <ApolloProvider client={client}>
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <StripeProvider apiKey="pk_test_51IDYu2DPA2EfKp5HBJs9fogpxFDAAK37GNXSms7MIoiWrnMHzqsEMbQ6wVtpjndzDl5grVNFZM6MTbvzqZP3MHAL00977fzMru">
         <App />
-      </ApolloProvider>
-    </BrowserRouter>
-  </StripeProvider>,
+      </StripeProvider>
+    </ApolloProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

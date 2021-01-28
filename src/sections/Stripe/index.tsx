@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Redirect, Route, RouteComponentProps } from "react-router-dom";
+import { Redirect, RouteComponentProps } from "react-router-dom";
 import { useMutation } from "react-apollo";
 import { Layout, Spin } from "antd";
 import { CONNECT_STRIPE } from "../../lib/graphql/mutations";

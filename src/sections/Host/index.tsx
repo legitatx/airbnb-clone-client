@@ -37,7 +37,6 @@ interface Props {
 
 const { Content } = Layout;
 const { Text, Title } = Typography;
-const { Item } = Form;
 
 export const Host = ({ viewer }: Props) => {
   const [form] = Form.useForm();
@@ -152,7 +151,8 @@ export const Host = ({ viewer }: Props) => {
           </Text>
         </div>
 
-        <Item
+        <Form.Item
+          name="type"
           label="Home Type"
           rules={[{ required: true, message: "Please select a home type!" }]}
         >
@@ -165,9 +165,10 @@ export const Host = ({ viewer }: Props) => {
               <HomeOutlined style={{ color: iconColor }} /> <span>House</span>
             </Radio.Button>
           </Radio.Group>
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
+          name="numOfGuests"
           label="Max Number of Guests"
           rules={[
             {
@@ -177,9 +178,10 @@ export const Host = ({ viewer }: Props) => {
           ]}
         >
           <InputNumber min={1} placeholder="4" />
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
+          name="title"
           label="Title"
           extra="Max character count of 45"
           rules={[
@@ -193,9 +195,10 @@ export const Host = ({ viewer }: Props) => {
             maxLength={45}
             placeholder="The iconic and luxurious Bel-Air mansion!"
           />
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
+          name="description"
           label="Description of listing"
           extra="Max character count of 400"
           rules={[
@@ -210,41 +213,42 @@ export const Host = ({ viewer }: Props) => {
             maxLength={400}
             placeholder="Modern, clean, and iconic home of the Fresh Prince. Situated in the heart of Bel-Air Los Angeles."
           />
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
+          name="address"
           label="Address"
           rules={[{ required: true, message: "Please enter an address!" }]}
         >
           <Input placeholder="251 North Bristol Avenue" />
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
           label="City/Town"
           rules={[{ required: true, message: "Please enter a city!" }]}
         >
           <Input placeholder="Los Angeles" />
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
           label="State/Province"
           rules={[
             { required: true, message: "Please enter a state/province!" },
           ]}
         >
           <Input placeholder="California" />
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
           label="Zip/Postal Code"
           rules={[
             { required: true, message: "Please enter a zip/postal code!" },
           ]}
         >
           <Input placeholder="Please enter a zip code for your listing." />
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
           label="Image"
           extra="Images have to be under 1MB in size and of type JPG or PNG"
           rules={[
@@ -258,8 +262,8 @@ export const Host = ({ viewer }: Props) => {
             <Upload
               name="image"
               listType="picture-card"
-              showUploadList={false}
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              showUploadList={false}
               beforeUpload={beforeImageUpload}
               onChange={handleImageUpload}
             >
@@ -273,9 +277,10 @@ export const Host = ({ viewer }: Props) => {
               )}
             </Upload>
           </div>
-        </Item>
+        </Form.Item>
 
-        <Item
+        <Form.Item
+          name="price"
           label="Price"
           extra="All prices in $USD/day"
           rules={[
@@ -286,13 +291,13 @@ export const Host = ({ viewer }: Props) => {
           ]}
         >
           <InputNumber min={0} placeholder="120" />
-        </Item>
+        </Form.Item>
 
-        <Item>
+        <Form.Item name="button">
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
-        </Item>
+        </Form.Item>
       </Form>
     </Content>
   );
